@@ -1,0 +1,123 @@
+\documentclass[11pt]{homework}
+
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+
+\newcommand{\hwname}{Tomáš Sasák}
+\newcommand{\hwemail}{xsasak01}
+\newcommand{\hwtype}{Protokol}
+\newcommand{\hwnum}{}
+\newcommand{\hwclass}{}
+\newcommand{\hwlecture}{Signály a systémy}
+\newcommand{\hwsection}{}
+
+\begin{document}
+\maketitle
+
+\question*{Úloha}
+
+	Signál som načítal pomocou \verb|wavfile| a vynormoval. Počet vzorkov vypočítal podelením počtu vzorkov a vzorkovaciej frekvencie. Počet symbolov podelením počtu vzorkov a čísla 16.	
+
+	Výsledky:
+	\newline
+	Vzorkovacia frekvencia: 16000 $[Hz]$
+	\newline
+	Počet vzorkov signálu: 32000 $[Vzorok]$
+	\newline	
+	Dĺžka signálu: 2.0 $[s]$
+	\newline 
+	Počet binárnych symbolov signálu: 2000 $[binarny symbol]$
+	
+
+
+\question*{Úloha}
+Signál $s[n]$, prešiel \verb|for| cyklom. kde pre každú skupinu 16 prvkov, každý 8. prvok bol porovnaný a podľa zadaných podmienok bolo pridané dané binárne číslo 
+$(0/1)$ do premennej \verb|symbols|. \newline
+Pomocou nástroja \verb|diff|, som porovnal, zhodu vypočítaných dekódovaných binárnych symbolov so zadanými binárnymi symbolmi, ktoré sa zhodovali. Následne, bolo vypočítané, koľko vzorkov náleží $20ms$ a kolko času pripadá na jeden vzorok. \newline
+Zadaný signál $s[n]$, bol vykreslený pre časový interval $0.020s$. Následne dekódované binárne symboly boli vykreslené ďalším \verb|for| cyklom  ktorý pre každý 16 prvok signálu $s[n]$, vygeneroval tento symbol pomocou \verb|stem|.\newline
+Vznikol následujúci graf:
+\begin{center}
+\includegraphics[scale=0.4]{uloha2.pdf}
+\end{center}
+
+\question*{Úloha}
+Nuly a póly filtra som vypočítal pomocou \verb|tf2zpk|. Pre stabilitu filtra musí platiť, že jeho póly sa musia nachádzať v jednotkovej kružnici. \newline
+Vznikol následujúci graf:
+\begin{center}
+\includegraphics[scale=0.4]{uloha3.pdf}
+\end{center}
+Filter je stabilný.
+
+\question*{Úloha}
+Frekvenčnú charakteristiku som vypočítal pomocou \verb|freqz|. Pre výpočet modula, bolo treba odstrániť imaginárnu časť charakteristiky.\newline
+Vznikol následujúci graf:
+\begin{center}
+\includegraphics[scale=0.4]{uloha4.pdf}
+\end{center}
+Tento filter je dolná priepusť.
+Mezná frekvencia je lokálne maximum v intervale $<0,1000>$ na X osy, presnejšie 484.375 $[Hz]$
+
+\question*{Úloha}
+Signál som prefiltroval pomocou \verb|lfilter|.\newline
+Vznikol následujúci graf:
+\begin{center}
+\includegraphics[scale=0.4]{uloha5.pdf}
+\end{center}
+Graf som si v prieberu riešenia presnejšie vykreslil a uznal som z neho, že signál je posunutý približne 0.001 $[s]$ doprava, čo udáva 16 vzorkov.\newline
+\question*{Úloha}
+Signál som posunul. Symboly posunutého signálu som zdekódoval rovnakým \verb|for| cyklom ako v $2.$ úlohe.\newline
+Vznikol následujúci graf:
+\begin{center}
+\includegraphics[scale=0.35]{uloha6.pdf}
+\end{center}
+\question*{Úloha}
+Symboly patriace zadanému signálu som skrátil o 1 prvok od konca a porovnal pomocou \verb|logical_xor|.
+Výsledky:\newline
+Počet chybných bitov vzniknutých posunom: 95 $[vzorok]$ \newline
+Symboly dekódované z ss\_shifted majú chybovosť: 4.7524 \% \newline
+\question*{Úloha}
+Spektra signálov som vypočítal pomocou \verb|fft|.
+\begin{center}
+\includegraphics[scale=0.4]{uloha8.pdf}
+\end{center}
+Spektra sú si trocha podobné len zozačiatku, ale neskôr už je vidieť že signál bol prefiltrovaným zadaným filtrom. Toto rovnako podporuje tvrdenie, že filter je dolná priepusť a že od istej frekvencie prestane prepúštať vzorky signálu.\newline
+\question*{Úloha}
+Funkciu hustoty pravdepodobnosti som vypočítal pomocou \verb|histogram| a podelil prvky histogramu počtom realizácií signálu $s[n]$ a veľkosťou jedného binu histogramu.
+\begin{center}
+\includegraphics[scale=0.4]{uloha9.pdf}
+\end{center}
+Kontrola integrálu $p(x)$: 1.0000 \newline
+\question*{Úloha}
+Koreláciu signálu som vykonal pomocou \verb|corerlate| a vykreslil som výsledky len od $<-50,50>$\newline
+Vznikol následujúci graf:
+\begin{center}
+\includegraphics[scale=0.4]{uloha10.pdf}
+\end{center}
+\question*{Úloha}
+$R[0]$, je presný stred grafu, čiže index presne v strede. $R[1]$, stred + 1 index. $R[2]$, stred + 2 index.
+Výsledky: \newline
+
+Hodnota koeficientu $R[0]$: 0.23300420415043482 \newline
+Hodnota koeficientu $R[1]:$ 0.26962989249519886 \newline
+Hodnota koeficientu $R[16]$: 0.01985382855273201 \newline
+\question*{Úloha}
+Časový odhad združenej funkcie hustoty rozdelenia pravdepodobnosti som vypočítal pomocou \verb|histogram2d| a \verb|meshgrid|. \newline
+Vznikol následujúci graf:
+\begin{center}
+\includegraphics[scale=0.4]{uloha12.pdf}
+\end{center}
+\question*{Úloha}
+Pre výpočet integrálu bolo nutné vypočítať veľkosť jedného binu, a výnasobiť ju hodnotami grafu $p(x_1, x_2, 1)$ a sčítať.
+\begin{verbatim}
+binsize = (numpy.abs(x1_edges[0] - x1_edges[1])) * (numpy.abs(x2_edges[0] - x2_edges[1]))
+numpy.sum(px1x2 * binsize)
+\end{verbatim}
+Kontrola integrálu  $p(x_1, x_2, 1)$: 0.9999999999999934\newline
+\question*{Úloha}
+Pre výpočet integrálu bolo nutné, osekať $X$ a $Y$  pre $R[0]$ a následne vynásobiť tieto $X$, $Y$ a hodnoty grafu $p(x_1, x_2, 1)$ a spraviť sumu. Následovne bolo treba vynásobiť ešte s veľkosťou jedného binu a spraviť sumu.
+\begin{verbatim}
+r0 = numpy.sum(numpy.sum(X_correct * Y_correct * px1x2) * binsize)
+\end{verbatim}
+$R[0]$ z grafu $p(x_1 ,x_2 , 1)$ sa rovná : 0.23301080280423597\newline
+Táto hodnota je silne podobná s výsledkom z úlohy 11, nepresnosť mohla vzniknúť zaokrúhlovaním.
+\end{document}
